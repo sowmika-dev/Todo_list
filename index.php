@@ -19,11 +19,12 @@
     </header>
 
     <main class="container mt-4 mb-5">
-        <div class="card shadow-sm">
-            <div class="card-body">
+        <h1 class="fw-bold text-center mb-4">All Tasks</h1>
+        <div class="card rounded shadow-sm">
+            <div class="card-body p-3">
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
                                 <th>Task Name</th>
@@ -41,7 +42,7 @@
                                 <td>2025-12-02</td>
                                 <td><span class="badge bg-warning text-dark">Pending</span></td>
                                 <td>
-                                    <a href="update.php?ID=1" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="edit.php?ID=1" class="btn btn-primary btn-sm me-2">Edit</a>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                 </td>
                             </tr>
