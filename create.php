@@ -23,19 +23,20 @@
         <div class="card shadow-sm">
              <div class="card-body">
                 <form action="store.php" method="POST" class="form-group">
-                    <label class="form-label" for="taskName">Task Name</label>
-                    <input class="form-control" type="text" name="task_name" id="taskName">
+                    <label class="form-label" for="taskname">Task Name</label>
+                    <input class="form-control" type="text" name="task_name" id="taskname">
 
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" rows="2" name="description" id="description"></textarea>
 
-                    <label for="due_date">Due Date</label>
-                    <input class="form-control" type="date" name="due_date" id="due_date">
+                    <label for="duedate">Due Date</label>
+                    <input class="form-control" type="date" name="due_date" id="duedate">
 
-                    <label class="form-label" for="taskStatus">Status</label>
-                    <select class="form-select mb-5" name="status" id="taskStatus">
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
+                    <label class="form-label" for="taskstatus">Status</label>
+                    <select class="form-select mb-5" name="status" id="taskstatus">
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
                     </select>
 
                     <button class="btn btn-success" type="submit">Add Task</button>
