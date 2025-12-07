@@ -39,13 +39,43 @@
                         <option value="Completed">Completed</option>
                     </select>
 
-                    <button class="btn btn-success" type="submit">Add Task</button>
+                    <button class="btn btn-success" 
+                    type="submit">Add Task</button>
 
                 </form>
              </div>
         </div>
     </main>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-success">
+                    <h5 class="fw-bold" id="successModalLabel">Success!</h5>
+                </div>
+                <div class="modal-body bg-white text-dark">
+                    <p class="fw-lead">
+                        Task added successfully...
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <a href="index.php" class="btn btn-success btn-sm">OK</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<?php
+if (isset($_GET['success'])) { ?>
+<script>
+    let modal = new bootstrap.Modal(document.getElementById('successModal'));
+    modal.show();
+</script>
+     
+<?php } ?>
    
 </body>
 </html>

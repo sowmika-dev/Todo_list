@@ -15,12 +15,12 @@ else {
             VALUES ('$taskname','$description','$duedate','$status')";
 
     $result = mysqli_query($conn,$sql);
-    
-    if($result) {
-        header('Location:index.php');
+    if($result) { 
+        header('Location:create.php?success=1');
         exit;
     }
     else {
-        echo "Error inserting task:" .mysqli_error($conn);
+        header('Location:create.php?error=1');
+        exit;
     }
 }
