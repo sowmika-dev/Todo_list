@@ -1,3 +1,5 @@
+<?php
+include 'database.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +26,14 @@
             <div class="card-body p-3">
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
+                        <? 
+                                $sql = "SELECT * FROM tasks ORDER BY id ";
+
+                                $result = mysqli_query($conn,$sql);
+
+                                if (mysqli_num_rows($result)>0) {
+                                    while ($row = mysqli_fetch_assoc($result)) : 
+                            ?>
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
@@ -36,20 +46,30 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>Sample task</td>
-                                <td>This is a sample task</td>
-                                <td>2025-12-02</td>
-                                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                <td><? echo $row['id'] ?></td>
+                                <td><? echo $row['task_name'] ?></td>
+                                <td><? echo $row['description'] ?></td>
+                                <td><? echo $row['due_date'] ?></td>
+                                <td><span class="badge bg-warning text-dark"><? echo $row['status'] ?></span></td>
                                 <td>
                                     <a href="edit.php?ID=1" class="btn btn-primary btn-sm me-2">Edit</a>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                 </td>
+                                <? endwhile; 
+                                ?>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <? } else { ?>
+                                <div class="text-center">
+                                   <h2 class=" mt-4 fw-secondary text-center mb-4">No tasks found!</h2>
+                                   <a href="create.php" class="btn btn-primary">Let's get started</a>
+                                </div>   
+                                <?    
+                                }
+                                ?>
         </div>
     </main>
 
