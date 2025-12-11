@@ -16,11 +16,11 @@ else {
 
     $result = mysqli_query($conn,$sql);
     if($result) { 
-        header('Location:create.php?success=1');
+        header('Location:index.php?success=1');
         exit;
     }
     else {
-        header('Location:create.php?error=1');
+        header('Location:index.php?error=1');
         exit;
     }
 }

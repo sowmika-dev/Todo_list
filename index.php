@@ -20,6 +20,16 @@ include 'database.php' ?>
         </nav>
     </header>
 
+    <!-- create msg -->
+     <?php if(isset($_GET['success']) && $_GET['success'] == 1):
+        ?>
+        <div class="alert alert-success test center">Task added successfully!</div>
+     <? endif; 
+     
+        if(isset($_GET['error']) && $_GET['error'] == 1) :?>
+        <div class="alert alert-danger test center">Failed to add task.</div>
+     <? endif; ?> 
+
 
     <!-- delete msg -->
      <?php if(isset($_GET['deleted']) && $_GET['deleted'] == 1):
