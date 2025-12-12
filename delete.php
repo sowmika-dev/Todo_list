@@ -7,7 +7,7 @@ if(!isset($_GET['id']))    {
 }
 else {
     $id = $_GET['id'];
-    $sql = "DELETE FROM tasks where id = $id";
+    $sql = "DELETE FROM tasks WHERE id = $id";
     $result = mysqli_query($conn,$sql);
 
     if($result){

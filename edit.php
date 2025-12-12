@@ -1,3 +1,25 @@
+<?php
+include 'database.php'; 
+
+if(!isset($_GET['id'])){
+    header("Location:index.php");
+    exit;
+}
+else {
+
+$id = intval($_GET['id']);
+$sql = "SELECT * FROM tasks WHERE id = $id";
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_assoc($result);
+
+if(!$row){
+    header("Location:index.php");
+    exit;
+}
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,22 +45,25 @@
         <div class="card shadow-sm">
              <div class="card-body">
                 <form action="update.php" method="POST" class="form-group">
+                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
                     <label class="form-label" for="taskName">Task Name</label>
-                    <input class="form-control" type="text" name="task_name" id="taskName">
+                    <input class="form-control" type="text" name="task_name" id="taskName" value="<?php echo $row['task_name']; ?>">
 
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" rows="2" name="description" id="description"></textarea>
+                    <textarea class="form-control" rows="2" name="description" id="description"><?php echo $row['description']; ?></textarea>
 
                     <label for="due_date">Due Date</label>
-                    <input class="form-control" type="date" name="due_date" id="due_date">
+                    <input class="form-control" type="date" name="due_date" id="due_date" value="<?php echo $row['due_date']; ?>">
 
                     <label class="form-label" for="taskStatus">Status</label>
                     <select class="form-select mb-5" name="status" id="taskStatus">
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
+                        <option value="pending"   <?= $row['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
+                        <option value="in progress"   <?= $row['status'] == 'In Progress' ? 'selected' : '' ?>>In Progress</option>
+                        <option value="completed"   <?= $row['status'] == 'completed' ? 'selected' : '' ?>>Completed</option>
+                        
                     </select>
 
-                    <button class="btn btn-success" type="submit">Update Task</button>
+                    <button class="btn btn-success" type="submit">Save Changes</button>
 
                 </form>
              </div>
@@ -48,3 +73,8 @@
    
 </body>
 </html>
+
+<?php
+?>
+
+

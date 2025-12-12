@@ -31,6 +31,16 @@ include 'database.php' ?>
      <? endif; ?> 
 
 
+    <!-- update msg -->
+    <?php if(isset($_GET['update']) && $_GET['update'] == 1):
+        ?>
+        <div class="alert alert-success test center">Task updated successfully!</div>
+     <? endif; 
+     
+        if(isset($_GET['update']) && $_GET['update'] == 0) :?>
+        <div class="alert alert-danger test center">Failed to update task.</div>
+     <? endif; ?> 
+
     <!-- delete msg -->
      <?php if(isset($_GET['deleted']) && $_GET['deleted'] == 1):
         ?>
@@ -74,7 +84,7 @@ include 'database.php' ?>
                                 <td><? echo $row['due_date'] ?></td>
                                 <td><span class="badge bg-warning text-dark"><? echo $row['status'] ?></span></td>
                                 <td>
-                                    <a href="edit.php?ID=1" class="btn btn-primary btn-sm me-2">Edit</a>
+                                    <a href="edit.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm me-2">Edit</a>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['id'] ?>">Delete</button>
                                 </td>
                             <div class="modal fade" id="deleteModal<?= $row['id']?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
