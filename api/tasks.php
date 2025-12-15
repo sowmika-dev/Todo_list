@@ -36,10 +36,26 @@ case 'POST':
         }
     } 
     else {
-        echo json_encode([
-            "success" => false,
-            "message" => "ID missing for update"
-        ]);
+        $task_name = mysqli_real_escape_string($conn, $_POST['task_name']);
+        $description = mysqli_real_escape_string($conn, $_POST['description']);
+        $due_date = $_POST['due_date'];
+        $status = $_POST['status'];
+
+        $sql = "INSERT INTO tasks (task_name, description, due_date, status) 
+                VALUES ('$task_name', '$description', '$due_date', '$status')";
+
+        if (mysqli_query($conn, $sql)) {
+            echo json_encode([
+                "success" => true,
+                "message" => "Task created successfully",
+                "id" => mysqli_insert_id($conn)
+            ]);
+        } else {
+            echo json_encode([
+                "success" => false,
+                "message" => "Failed to create task"
+            ]);
+        }
     }
     break;
 

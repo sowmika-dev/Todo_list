@@ -20,9 +20,10 @@
 
     <main class="container mt-5">
         <h1 class="text-center fw-bold mb-3">CREATE TASK</h1>
+        <div id="alertDiv"></div>
         <div class="card shadow-sm">
              <div class="card-body">
-                <form action="store.php" method="POST" class="form-group">
+                <form id="createForm" method="POST" class="form-group">
                     <label class="form-label" for="taskname">Task Name</label>
                     <input class="form-control" type="text" name="task_name" id="taskname">
 
@@ -46,6 +47,39 @@
              </div>
         </div>
     </main>
+
+<script>
+document.getElementById('createForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const task_name = document.getElementById('taskname').value;
+    const description = document.getElementById('description').value;
+    const due_date = document.getElementById('duedate').value;
+    const status = document.getElementById('taskstatus').value;
+
+    fetch('api/tasks.php', {
+        method: 'POST',
+        body: new URLSearchParams({ task_name, description, due_date, status })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const alertDiv = document.getElementById('alertDiv');
+        if (data.success) {
+            alert(data.message);
+            window.location.href = 'index.php?success=1';
+        } else {
+            alertDiv.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    ${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+        }
+    })
+    .catch(err => console.error(err));
+});
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
    
