@@ -19,37 +19,6 @@ include 'database.php' ?>
             </div>
         </nav>
     </header>
-
-    <!-- create msg -->
-     <?php if(isset($_GET['success']) && $_GET['success'] == 1):
-        ?>
-        <div class="alert alert-success test center">Task added successfully!</div>
-     <? endif; 
-     
-        if(isset($_GET['error']) && $_GET['error'] == 1) :?>
-        <div class="alert alert-danger test center">Failed to add task.</div>
-     <? endif; ?> 
-
-
-    <!-- update msg -->
-    <?php if(isset($_GET['update']) && $_GET['update'] == 1):
-        ?>
-        <div class="alert alert-success test center">Task updated successfully!</div>
-     <? endif; 
-     
-        if(isset($_GET['update']) && $_GET['update'] == 0) :?>
-        <div class="alert alert-danger test center">Failed to update task.</div>
-     <? endif; ?> 
-
-    <!-- delete msg -->
-     <?php if(isset($_GET['deleted']) && $_GET['deleted'] == 1):
-        ?>
-        <div class="alert alert-success test center">Task deleted successfully!</div>
-     <? endif; 
-     
-        if(isset($_GET['deleted']) && $_GET['deleted'] == 0) :?>
-        <div class="alert alert-danger test center">Failed to delete task.</div>
-     <? endif; ?>
        
 
     <main class="container mt-4 mb-5">
@@ -64,7 +33,7 @@ include 'database.php' ?>
                                 $result = mysqli_query($conn,$sql);
 
                                 if (mysqli_num_rows($result)>0) {
-                            ?>
+                        ?>
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
@@ -77,7 +46,7 @@ include 'database.php' ?>
                         </thead>
                         <tbody>
                             <tr>
-                        <?while ($row = mysqli_fetch_assoc($result)) : ?>
+                                <?while ($row = mysqli_fetch_assoc($result)) : ?>
                                 <td><? echo $row['id'] ?></td>
                                 <td><? echo $row['task_name'] ?></td>
                                 <td><? echo $row['description'] ?></td>
@@ -85,27 +54,14 @@ include 'database.php' ?>
                                 <td><span class="badge bg-warning text-dark"><? echo $row['status'] ?></span></td>
                                 <td>
                                     <a href="edit.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm me-2">Edit</a>
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['id'] ?>">Delete</button>
-                                </td>
-                            <div class="modal fade" id="deleteModal<?= $row['id']?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                            <div class="modal-header bg-dark text-white">
-                                <h5 class="modal-title" id="deleteModalLabel">Confirm delete</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                             Are you sure you want to delete this task?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
-                                </button>
+                                    <button 
+                                        class="btn btn-danger btn-sm delete-btn"
+                                        data-id="<?= $row['id'] ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal">Delete
+                                    </button>
 
-                                <a  class="btn btn-danger" id="confirmDelete" href="delete.php?id=<? echo $row['id']?>">Delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                </td>
         </tr>
         <? endwhile;  ?>
                         </tbody>
@@ -122,8 +78,51 @@ include 'database.php' ?>
                                 ?>
         </div>
     </main>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm delete</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this task?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                    </button>
+                    <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+ <script>
+    let deleteId = null;
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click',function(){
+            deleteId = this.getAttribute('data-id');
+        });
+    });
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click',function() {
+        fetch(`api/tasks.php?id=${deleteId}`,{
+            method:'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success){
+                location.reload();
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err));
+    });
+ </script>
    
 </body>
 </html>
