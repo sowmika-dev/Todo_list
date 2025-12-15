@@ -44,8 +44,9 @@ if(!$row){
         <h1 class="text-center fw-bold mb-3">Edit TASK</h1>
         <div class="card shadow-sm">
              <div class="card-body">
-                <form action="update.php" method="POST" class="form-group">
-                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                <form id="editForm" method="POST" class="form-group">
+                    <input type="hidden" name="id"
+                    id="task_id" value="<?= $row['id'] ?>">
                     <label class="form-label" for="taskName">Task Name</label>
                     <input class="form-control" type="text" name="task_name" id="taskName" value="<?php echo $row['task_name']; ?>">
 
@@ -70,6 +71,34 @@ if(!$row){
         </div>
     </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById('editForm').addEventListener('submit', function(e){
+    e.preventDefault(); 
+
+    const id = document.getElementById('task_id').value;
+    const task_name = document.getElementById('taskName').value;
+    const description = document.getElementById('description').value;
+    const due_date = document.getElementById('due_date').value;
+    const status = document.getElementById('taskStatus').value;
+
+    fetch(`api/tasks.php?id=${id}`, {
+        method: 'POST', 
+        body: new URLSearchParams({ task_name, description, due_date, status })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message); 
+            window.location.href = 'index.php'; 
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(err => console.error(err));
+});
+</script>
+
    
 </body>
 </html>
