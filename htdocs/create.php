@@ -66,7 +66,7 @@ document.getElementById('createForm').addEventListener('submit', function(e){
         const alertDiv = document.getElementById('alertDiv');
         if (data.success) {
             alert(data.message);
-            window.location.href = 'index.php?success=1';
+            window.location.href = 'index.php';
         } else {
             alertDiv.innerHTML = `
                 <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">

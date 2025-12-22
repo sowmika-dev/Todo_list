@@ -28,11 +28,10 @@ include 'database.php' ?>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <? 
-                                $sql = "SELECT * FROM tasks ORDER BY id ";
+                            $sql = "SELECT * FROM tasks ORDER BY id ";
+                            $result = mysqli_query($conn,$sql);
 
-                                $result = mysqli_query($conn,$sql);
-
-                                if (mysqli_num_rows($result)>0) {
+                            if (mysqli_num_rows($result)>0) {
                         ?>
                         <thead class="table-dark">
                             <tr>
@@ -46,7 +45,7 @@ include 'database.php' ?>
                         </thead>
                         <tbody>
                             <tr>
-                                <?while ($row = mysqli_fetch_assoc($result)) : ?>
+                                <? while ($row = mysqli_fetch_assoc($result)) : ?>
                                 <td><? echo $row['id'] ?></td>
                                 <td><? echo $row['task_name'] ?></td>
                                 <td><? echo $row['description'] ?></td>
@@ -62,20 +61,18 @@ include 'database.php' ?>
                                     </button>
 
                                 </td>
-        </tr>
-        <? endwhile;  ?>
+                            </tr>
+                                <? endwhile;  ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <? } else { ?>
-                                <div class="text-center">
-                                   <h2 class=" mt-4 fw-secondary text-center mb-4">No tasks found!</h2>
-                                   <a href="create.php" class="btn btn-primary">Let's get started</a>
-                                </div>   
-                                <?    
-                                }
-                                ?>
+                             <? } else { ?>
+                                    <div class="text-center">
+                                        <h2 class=" mt-4 fw-secondary text-center mb-4">No tasks found!</h2>
+                                        <a href="create.php" class="btn btn-primary">Let's get started</a>
+                                    </div>   
+                             <? } ?>
         </div>
     </main>
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -83,7 +80,7 @@ include 'database.php' ?>
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="deleteModalLabel">Confirm delete</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to delete this task?
